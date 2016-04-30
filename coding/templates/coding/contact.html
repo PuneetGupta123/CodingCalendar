@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+{% load staticfiles %}
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+<link href="{% static 'coding/css/bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'coding/css/signup.css' %}" rel="stylesheet">
+<link href="{% static 'coding/css/tuts.css' %}" rel="stylesheet">
+<link href="{% static 'coding/css/table.css' %}" rel="stylesheet">
+<link href="{% static 'coding/css/offcanvas.css' %}" rel="stylesheet">
+<link href="{% static 'coding/css/font-awesome.min.css' %}" rel="stylesheet">
+<link href="http://fonts.googleapis.com/css?family=Cookie" rel="stylesheet" type="text/css">  
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<script type="text/javascript" src="js/materialize.min.js"></script>
+<link href="{% static 'coding/css/materialicons.css' %}" rel="stylesheet">
+<link href="{% static 'coding/css/materialize.min.css' %}" rel="stylesheet">
+<link href="{% static 'coding/css/footer-distributed-with-address-and-phones.css' %}" rel="stylesheet">
+<script src="{% static 'coding/js/jquery-2.0.0.min.js' %}"></script>
+<script src="{% static 'coding/js/materialize.min.js' %}"></script>
+<script src="{% static 'coding/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'coding/js/materialize.js' %}"></script>  
+
+</head>
+ 
+ 
+ 
+<body background="{% static "coding/bg1.jpg" %}">
+    <div class="row">
+	<nav class="navbar navbar-fixed-top navbar-inverse">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Coding Calendar</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="/"><h6>Home</h6></a></li>
+            <li><a href="/about"><h6>About</h6></a></li>
+            <li class="active"><a href="contact-us"><h6>Contact</h6></a></li>
+          </ul>
+		  
+		  <form class="navbar-form navbar-right">
+            <div class="form-group">
+              <input type="text" placeholder="Email" class="form-control">
+            </div>
+            <div class="form-group">
+              <input type="password" placeholder="Password" class="form-control">
+				</div>
+            <button type="submit" class="btn btn-success">Sign in</button>
+			 </form>
+        </div><!-- /.nav-collapse -->
+      </div><!-- /.container -->
+    </nav><!-- /.navbar -->
+	</div>
+<!-- Grid -->
+  
+<div class="row">
+<div class="row"></div>
+  <div class="col-lg-1"><br/><br/><br/><br/>
+</div>
+ <div class="col-lg-10" style="box-shadow:10px 0px 50px -2px rgba(0,0,0,1);">
+  <br/>
+  <div class="row"></div>
+  <br>
+ <!-- <img class ="mainimage" src ="img/tut1.jpg"><br/><br/><br/>-->
+ 
+ <div class="hit-the-floor">Feedback</div>
+ <br><br><br>
+ <div class="row">
+    <form class="col s12" action="file ka name" onsubmit="return myFunction()" method="post">  <!--  ADD NAME OF THE FILE WHERE FORM IS REDIRECTED-->
+      <div class="row">
+        <div class="input-field col s6">
+          <i class="material-icons prefix">account_circle</i>
+          <input id="icon_prefix" type="text" class="validate">
+          <label for="icon_prefix">First Name</label>
+        </div>
+        <div class="input-field col s6">
+          <input id="last_name" type="text" class="validate">
+          <label for="last_name">Last Name</label>
+        </div>
+      </div>
+      
+     
+      <div class="row">
+        <div class="input-field col s12">
+          <i class="material-icons prefix">email</i>
+          <input id="email" type="email" class="validate">
+		  <label for="email" data-error="Enter the correct email format" data-success="Right">Email</label>
+        </div>
+      </div>
+	  
+        <div class="row">
+        <div class="input-field col s12">
+          <i class="material-icons prefix">phone</i>
+          <input id="icon_telephone" type="tel" class="validate">
+          <label for="icon_telephone">Telephone</label>
+        </div>
+      </div>
+		
+	<div class="row">
+    <form class="col s12">
+      <div class="row">
+        <div class="input-field col s12">
+          <textarea id="textarea1" class="materialize-textarea"></textarea>
+          <label for="textarea1">Message</label>
+        </div>
+      </div>
+    </form>
+  </div>		
+      
+		
+		
+		
+		<div class="row">
+		<div class="input-field col s12"><center>
+		<button class="btn waves-effect waves-light" type="submit" name="action">Submit
+		<i class="material-icons right">send</i></center>
+		</button>
+		</div>
+		</div>
+    </form>
+  </div>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+</div>
+<div class="col-lg-1">
+      <br><br><br>    
+     </div>
+	 
+	 </div>
+<footer class="footer-distributed">
+
+			<div class="footer-left">
+
+				<h3>Coding<span>Calendar</span></h3>
+
+				<p class="footer-links">
+					<a href="index11.html">Home</a>
+					<a href="aboutUs.html">About</a>
+					<a href="contact.html">Contact</a>
+				</p>
+
+				<p class="footer-company-name">Coding Calendar <br>&copy; Mohan Ghai, Pranav Jain, Puneet Gupta, Rahul Jain 2016</p>
+			</div>
+		<div class="footer-center">
+
+				<div>
+					<i class="fa fa-map-marker"></i>
+					<p><span>Delhi Technological University</span> Delhi, India</p>
+				</div>
+
+				<div>
+					<i class="fa fa-phone"></i>
+					<p>+91 8812121221</p>
+				</div>
+
+				<div>
+					<i class="fa fa-envelope"></i>
+					<p><a href="mailto:support@company.com">supportcodingcalendar@gmail.com</a></p>
+				</div>
+
+		</div>
+		<div class="footer-right">
+
+				<p class="footer-company-about">
+					<span>Reach Us</span>
+					
+				</p>
+
+				<div class="footer-icons">
+
+					<a href="#"><i class="fa fa-facebook"></i></a>
+					<a href="#"><i class="fa fa-twitter"></i></a>
+					<a href="#"><i class="fa fa-linkedin"></i></a>
+					<a href="#"><i class="fa fa-github"></i></a>
+
+				</div>
+
+		</div>
+		</footer>
+
+</body>
+</html>

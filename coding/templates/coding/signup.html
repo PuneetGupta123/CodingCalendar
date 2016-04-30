@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+{% load staticfiles %}
+<head>
+<title>Sign Up</title>
+<link href="{% static 'coding/css/bootstrap.min.css' %}" rel="stylesheet">
+
+<link href="{% static 'coding/css/signup.css' %}" rel="stylesheet">
+
+<link href="{% static 'coding/css/tuts.css' %}" rel="stylesheet">
+
+<script src="bootstrap-3.3.6-dist\js\jquery-2.2.0.min.js"></script>
+<script src="bootstrap-3.3.6-dist\js\bootstrap.min.js"></script>
+<link href="{% static 'coding/css/font-awesome.min.css' %}" rel="stylesheet">
+<link href="http://fonts.googleapis.com/css?family=Cookie" rel="stylesheet" type="text/css">  
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+ <script type="text/javascript" src="js/materialize.min.js"></script>
+ <link href="{% static 'coding/css/offcanvas.css' %}" rel="stylesheet">
+  <link href="{% static 'coding/css/materialicons.css' %}" rel="stylesheet">
+<link href="{% static 'coding/css/materialize.min.css' %}" rel="stylesheet">
+<link href="{% static 'coding/css/footer-distributed-with-address-and-phones.css' %}" rel="stylesheet">
+<script src="{% static 'coding/js/jquery-2.0.0.min.js' %}"></script>
+<script src="{% static 'coding/js/materialize.min.js' %}"></script>
+<script src="{% static 'coding/js/bootstrap.min.js' %}"></script>
+
+<script src="{% static 'coding/js/materialize.js' %}"></script>
+   
+<script src="{% static 'coding/js/offcanvas.js' %}"></script>
+
+<script>
+ function myFunction() {
+    var pass1 = document.getElementById("pass1").value;
+    var pass2 = document.getElementById("pass2").value;
+    var ok = true;
+    if (pass1 != pass2) {
+        alert("Passwords Do not match");
+        document.getElementById("pass1").style.borderColor = "#E34234";
+        document.getElementById("pass2").style.borderColor = "#E34234";
+        ok = false;
+    }
+    return ok;
+}
+ $(document).ready(function() {
+    $('input#pass1, input#pass2').characterCounter();
+  });
+ 
+ 
+</script>
+</head>
+ 
+ 
+<body background="{% static "coding/bg1.jpg" %}">
+    <div class="row">
+	<nav class="navbar navbar-fixed-top navbar-inverse">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Coding Calendar</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="/"><h6>Home</h6></a></li>
+            <li><a href="about"><h6>About</h6></a></li>
+            <li><a href="contact-us"><h6>Contact</h6></a></li>
+          </ul>
+		  
+		  <form class="navbar-form navbar-right">
+            <div class="form-group">
+              <input type="text" placeholder="Email" class="form-control">
+            </div>
+            <div class="form-group">
+              <input type="password" placeholder="Password" class="form-control">
+				</div>
+            <button type="submit" class="btn btn-success">Sign in</button>
+          </form>
+        </div><!-- /.nav-collapse
+      </div><!-- /.container -->
+    </nav><!-- /.navbar -->
+	</div>
+
+<!-- Grid -->
+  
+<div class="row">
+<div class="row"></div>
+  <div class="col-lg-1"><br/><br/><br/><br/>
+</div>
+ <div class="col-lg-10" style="box-shadow:10px 0px 50px -2px rgba(0,0,0,1);">
+  <br/>
+  <div class="row"></div>
+  <br>
+ <!-- <img class ="mainimage" src ="img/tut1.jpg"><br/><br/><br/>-->
+ 
+ <div class="hit-the-floor">Sign Up</div>
+ <div class="row">
+    <form class="col s12" action="" onsubmit="return myFunction()" method="post"> 
+    {% csrf_token %} <!--  ADD NAME OF THE FILE WHERE FORM IS REDIRECTED-->
+      <div class="row">
+        <div class="input-field col s4">
+          <i class="material-icons prefix">account_circle</i>
+          <input id="icon_prefix" type="text" class="validate" required="required" name="username">
+          <label for="icon_prefix">Username</label>
+        </div>
+        <div class="input-field col s4">
+          <input id="last_name" type="text" class="validate"  name="first">
+          <label for="last_name">First Name</label>
+        </div>
+        <div class="input-field col s4">
+          <input id="last_name" type="text" class="validate"  name="last">
+          <label for="last_name">Last Name</label>
+        </div>
+      </div>
+      
+     
+      <div class="row">
+        <div class="input-field col s12">
+          <i class="material-icons prefix">email</i>
+          <input id="email" type="email" class="validate" required="required" name="email">
+		  <label for="email" data-error="Enter the correct email format" data-success="Right">Email</label>
+        </div>
+      </div>
+	   <div class="row">
+        <div class="input-field col s6">
+          <i class="material-icons prefix">stars</i>
+          <input id="pass1" type="password" class="validate" length="20" required="required" minlength="6" name="password">
+		  <label for="password">Password</label>
+        </div>
+		<div class="input-field col s6">
+          <input id="pass2" type="password" class="validate" length="20" minlength="6"  name="cpassword">
+		  <label for="password">Confirm Password</label>
+        </div>
+        </div>
+		
+		<div class="row">
+        <div class="input-field col s4">
+          <i class="material-icons prefix">assessment</i>
+          <input id="handle1" type="text" class="validate"  name="CC">
+          <label for="handle1">Codechef Handle</label>
+        </div>
+        <div class="input-field col s4">
+          <input id="handle2" type="text" class="validate"  name="CF">
+          <label for="handle2">Codeforces Handle</label>
+        </div>
+		<div class="input-field col s4">
+          <input id="handle3" type="text" class="validate"  name="SP">
+          <label for="handle3">Spoj Handle</label>
+        </div>
+		</div>
+		
+		<div class="row">
+        <div class="input-field col s4">
+		 <p>
+		<input type="checkbox" id="int1" />
+		<label for="int1">Android Development</label>
+		</p>
+		</div>
+		
+		<div class="input-field col s4">
+		 <p>
+		<input type="checkbox" id="int2" />
+		<label for="int2">Competative Coding</label>
+		</p>
+		</div>
+		
+		<div class="input-field col s4">
+		 <p>
+		<input type="checkbox" id="int3" />
+		<label for="int3">Machine Learning</label>
+		</p>
+		
+		</div>
+		</div>
+	
+	<div class="row">
+        <div class="input-field col s4">
+		 <p>
+		<input type="checkbox" id="int4" />
+		<label for="int4">Artificial Intelligence</label>
+		</p>
+		</div>
+		
+		<div class="input-field col s4">
+		 <p>
+		<input type="checkbox" id="int5" />
+		<label for="int5">Web Development</label>
+		</p>
+		</div>
+		
+		<div class="input-field col s4">
+		 <p>
+		<input type="checkbox" id="int6" />
+		<label for="int6">Virtual Reality</label>
+		</p>
+		
+		</div>
+		</div>
+			
+      </div>
+		
+		
+		
+		<div class="row">
+		<div class="input-field col s12"><center>
+		<button class="btn waves-effect waves-light" type="submit" name="action">Submit
+		<i class="material-icons right">send</i></center>
+		</button>
+		</div>
+		</div>
+    </form>
+  </div>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+</div>
+<div class="col-lg-1">
+      <br><br><br>    
+     </div>
+	 
+	 </div>
+<footer class="footer-distributed">
+
+			<div class="footer-left">
+
+				<h3>Coding<span>Calendar</span></h3>
+
+				<p class="footer-links">
+					<a href="index11.html">Home</a>
+					
+					<a href="aboutUs.html">About</a>
+					
+					<a href="contact.html">Contact</a>
+				</p>
+
+				<p class="footer-company-name">Coding Calendar <br>&copy; Mohan Ghai, Pranav Jain, Puneet Gupta, Rahul Jain 2016</p>
+			</div>
+		<div class="footer-center">
+
+				<div>
+					<i class="fa fa-map-marker"></i>
+					<p><span>Delhi Technological University</span> Delhi, India</p>
+				</div>
+
+				<div>
+					<i class="fa fa-phone"></i>
+					<p>+91 8812121221</p>
+				</div>
+
+				<div>
+					<i class="fa fa-envelope"></i>
+					<p><a href="mailto:support@company.com">supportcodingcalendar@gmail.com</a></p>
+				</div>
+
+		</div>
+		<div class="footer-right">
+
+				<p class="footer-company-about">
+					<span>Reach Us</span>
+					
+				</p>
+
+				<div class="footer-icons">
+
+					<a href="#"><i class="fa fa-facebook"></i></a>
+					<a href="#"><i class="fa fa-twitter"></i></a>
+					<a href="#"><i class="fa fa-linkedin"></i></a>
+					<a href="#"><i class="fa fa-github"></i></a>
+
+				</div>
+
+		</div>
+		</footer>
+
+</body>
+<script type="text/javascript">
+  {% if msg %}
+    Materialize.toast("{{msg}}", 4000);
+  {% endif %}
+  </script>
+  <script>
+</html>

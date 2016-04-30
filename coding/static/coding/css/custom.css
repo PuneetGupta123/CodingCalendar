@@ -1,0 +1,27 @@
+.pull-right{
+	float: right;
+}
+
+.dropdown-menu{
+	text-align: center;
+	min-width: 30px;
+}
+
+.navbar{
+	border-radius: 0px;
+}
+
+.card{
+	min-height: 150px;
+}
+
+.progress{
+	height: 25px;
+}
+
+.admin-box{
+	border: 1px solid gray;
+	border-radius: 5px;
+	padding-left: 15px;
+	padding-right: 15px;
+}

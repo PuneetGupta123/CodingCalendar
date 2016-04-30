@@ -1,0 +1,92 @@
+<!-- this is simple example of bootstrap carousel-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Example of Bootstrap 3 Carousel</title>
+<!-- these are library file of css-->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+<!-- this is library file of Jquery-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<!--this is library file of javascript-->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<!-- this css used for body-->
+<style type="text/css">
+h2{
+margin: 0;
+color: #666;
+padding-top: 90px;
+font-size: 52px;
+font-family: "trebuchet ms", sans-serif;
+}
+.item{
+background: #333;
+text-align: center;
+height: 200px;
+width:300px;
+
+}
+.carousel{
+height: 200px;
+width:300px;
+
+}
+.bs-example{
+height: 200px;
+width:300px;
+padding-left: 600px;
+}
+</style>
+</head>
+<body>
+<!--this DIV use for carousel and sliding time-->
+<div class="bs-example">
+<div id="myCarousel" class="carousel slide" data-interval="3000" data-ride="carousel">
+<!-- this DIV use for carousel indicators for slider-->
+<ol class="carousel-indicators">
+<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+<li data-target="#myCarousel" data-slide-to="1"></li>
+<li data-target="#myCarousel" data-slide-to="2"></li>
+</ol>
+<!--Wrapper for carousel items which are show in output form-->
+<div class="carousel-inner">
+<!--this is first slider page-->
+<div class="active item">
+
+<div class="carousel-caption">
+<h3>First slide label</h3>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+</div>
+</div>
+<!-- this is second slider page-->
+<div class="item">
+
+
+<div class="carousel-caption">
+<h3>Second slide label</h3>
+<p>Aliquam sit amet gravida nibh, facilisis gravida odio.</p>
+</div>
+</div>
+<!-- this is third slider page-->
+<div class="item">
+
+<div class="carousel-caption">
+<h3>Third slide label</h3>
+<p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+</div>
+</div>
+</div>
+<!-- this is carousel controls for used of next and previous pages slider-->
+<a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+<span class="sr-only">Previous</span>
+</a>
+<a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+<span class="sr-only">Next</span>
+</a>
+</div>
+</div>
+</body>
+</html>

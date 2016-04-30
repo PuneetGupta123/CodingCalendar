@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+{% load staticfiles %}
+<head>
+<title>Leaderboard</title>
+<link href="{% static 'coding/css/bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'coding/css/signup.css' %}" rel="signupesheet">
+
+<link href="{% static 'coding/css/tuts.css' %}" rel="stylesheet">
+<link href="{% static 'coding/css/offcanvas.css' %}" rel="signupesheet">
+
+<link href="{% static 'coding/css/leaderboard.css' %}" rel="stylesheet">
+  <link href="{% static 'coding/css/materialicons.css' %}" rel="stylesheet">
+<link href="{% static 'coding/css/materialize.min.css' %}" rel="stylesheet">
+<link href="{% static 'coding/css/footer-distributed-with-address-and-phones.css' %}" rel="stylesheet">
+
+<script src="{% static 'coding/js/jquery-2.0.0.min.js' %}"></script>
+<script src="{% static 'coding/js/materialize.min.js' %}"></script>
+<script src="{% static 'coding/js/bootstrap.min.js' %}"></script>
+
+<script src="{% static 'coding/js/materialize.js' %}"></script>
+   
+<script src="{% static 'coding/js/jquery.stickyheader.js' %}"></script>
+
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+<link href="http://fonts.googleapis.com/css?family=Cookie" rel="stylesheet" type="text/css">  
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+</head>
+ 
+ 
+ 
+<body background="{% static "coding/bg1.jpg" %}">
+    <div class="row">
+	<nav class="navbar navbar-fixed-top navbar-inverse">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index11.html">Coding Calendar</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="index11.html"><h6>Home</h6></a></li>
+            <li><a href="aboutUs.html"><h6>About</h6></a></li>
+            <li><a href="contact.html"><h6>Contact</h6></a></li>
+          </ul>
+		  
+		  <form class="navbar-form navbar-right">
+            <div class="form-group">
+              <input type="text" placeholder="Email" class="form-control">
+            </div>
+            <div class="form-group">
+              <input type="password" placeholder="Password" class="form-control">
+				</div>
+            <button type="submit" class="btn btn-success">Sign in</button>
+          </form>
+        </div><!-- /.nav-collapse -->
+      </div><!-- /.container -->
+    </nav><!-- /.navbar -->
+	</div>
+
+<!-- Grid -->
+  
+<div class="row">
+  	<div class="col-lg-1"><br/><br/><br/><br/></div>
+	
+ 	<div class="col-lg-10",style="box-shadow:10px 0px 50px -2px rgba(0,0,0,1);">
+  	<br>
+	<h3><center><font><b>Leaderboard</b></h3></center></font>
+	
+	<table>
+		<tr>
+          <th><center>Rank</th></center></th>
+          <th><center>Name</th></center></th>
+          <th><center>Codechef Count</th></center></th>
+          <th><center>Spoj Count</th></center></th>
+          <th><center>Codeforces Count</th></center></th>
+          <th><center>Total Count</th></center></th>
+        </tr>
+        {% for s in users %}
+                  <tr>
+                    <td><center>{{forloop.counter}}</center></td>
+                    <td><center>{{s.user.username}}</center></td>
+                    <td><center>{{s.codechef_count}}</center></td>
+                    <td><center>{{s.spoj_count}}</center></td>
+                    <td><center>{{s.codeforces_count}}</center></td>
+                    <td><center>{{s.problem_count}}</center></td>
+                </tr>
+        {% endfor %}		
+
+	</table>
+	
+	
+	
+	
+		
+		
+		
+	</div>
+	
+	<div class="col-lg-1"><br><br><br></div>
+</div>
+
+<footer class="footer-distributed">
+
+			<div class="footer-left">
+
+				<h3>Coding<span>Calendar</span></h3>
+
+				<p class="footer-links">
+					<a href="index11.html">Home</a>
+					<a href="aboutUs.html">About</a>
+					<a href="contact.html">Contact</a>
+				</p>
+
+				<p class="footer-company-name">Coding Calendar <br>&copy; Mohan Ghai, Pranav Jain, Puneet Gupta, Rahul Jain 2016</p>
+			</div>
+		<div class="footer-center">
+
+				<div>
+					<i class="fa fa-map-marker"></i>
+					<p><span>Delhi Technological University</span> Delhi, India</p>
+				</div>
+
+				<div>
+					<i class="fa fa-phone"></i>
+					<p>+91 8812121221</p>
+				</div>
+
+				<div>
+					<i class="fa fa-envelope"></i>
+					<p><a href="mailto:support@company.com">supportcodingcalendar@gmail.com</a></p>
+				</div>
+
+		</div>
+		<div class="footer-right">
+
+				<p class="footer-company-about">
+					<span>Reach Us</span>
+					
+				</p>
+
+				<div class="footer-icons">
+
+					<a href="#"><i class="fa fa-facebook"></i></a>
+					<a href="#"><i class="fa fa-twitter"></i></a>
+					<a href="#"><i class="fa fa-linkedin"></i></a>
+					<a href="#"><i class="fa fa-github"></i></a>
+
+				</div>
+
+		</div>
+		</footer>
+
+</body>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-throttle-debounce/1.1/jquery.ba-throttle-debounce.min.js"></script>
+<script src="js/jquery.stickyheader.js"></script>
+</html>
