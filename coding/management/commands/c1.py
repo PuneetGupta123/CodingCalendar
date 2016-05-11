@@ -1,28 +1,18 @@
-
-sys.path.append("C:\CodingCalendar")
-os.environ["DJANGO_SETTINGS_MODULE"] = "CodingCalendar.settings"
-django.setup()
-
+from django.core.management.base import BaseCommand, CommandError
 import requests
 from bs4 import BeautifulSoup
 from time import strptime,strftime,mktime,gmtime,localtime
 from urllib2 import urlopen,Request
 import json
-
-
-from django.core.management.base import BaseCommand, CommandError
-from coding.models import UpcomingContest
-from django.conf import settings
-
-posts= {"ongoing":[] , "upcoming":[]}
+import os
+import sys
+import django
+sys.path.append("C:\Users\NEW\Desktop\CodingCalendar")
+os.environ["DJANGO_SETTINGS_MODULE"] = "CodingCalendar.settings"
+django.setup()
+from coding.models import UpcomingContest,PastContest,OngoingContest
+posts= {"ongoing":[] , "upcoming":[] , "past":[]}
 hackerrank_contests = {"urls":[]}
-
-class Command(BaseCommand):
-    help = 'Scrape all the competition Data'
-    args = 'Arguments is not needed'
-
-    def handle(self, *args, **options):
-        final()
 
 def get_duration(duration):
     days = duration/(60*24)
@@ -88,20 +78,22 @@ def fetch_hackerearth():
     
 
 def fetch_codeforces():
-    page = urlopen("http://codeforces.com/api/contest.list")
-    data = json.load(page)["result"]
-    for item in data:
-        
-        if item["phase"]=="FINISHED": break
-        
-        start_time = strftime("%a, %d %b %Y %H:%M",gmtime(item["startTimeSeconds"]+19800))
-        end_time   = strftime("%a, %d %b %Y %H:%M",gmtime(item["durationSeconds"]+item["startTimeSeconds"]+19800))
-        duration = get_duration( item["durationSeconds"]/60 )
-        
-        if item["phase"].strip()=="BEFORE":  
-            posts["upcoming"].append({ "Name" :  item["name"] , "url" : "http://codeforces.com/contest/"+str(item["id"]) , "StartTime" :  start_time,"EndTime" : end_time,"Duration":duration,"Platform":"CODEFORCES"  })
-        else:
-            posts["ongoing"].append({  "Name" :  item["name"] , "url" : "http://codeforces.com/contest/"+str(item["id"])  , "EndTime"   : end_time  ,"Platform":"CODEFORCES"  })
+	page = urlopen("http://codeforces.com/api/contest.list")
+	data = json.load(page)["result"]
+	c1=0
+	for item in data:
+		start_time = strftime("%a, %d %b %Y %H:%M",gmtime(item["startTimeSeconds"]+19800))
+		end_time  = strftime("%a, %d %b %Y %H:%M",gmtime(item["durationSeconds"]+item["startTimeSeconds"]+19800))
+		duration = get_duration( item["durationSeconds"]/60 )
+		if item["phase"]=="FINISHED" and c1<5:
+			posts["past"].append({ "Name" :  item["name"] , "url" : "http://codeforces.com/contest/"+str(item["id"]) , "StartTime" :  start_time,"EndTime" : end_time,"Duration":duration,"Platform":"CODEFORCES"  })
+			c1=c1+1
+		start_time = strftime("%a, %d %b %Y %H:%M",gmtime(item["startTimeSeconds"]+19800))
+		end_time   = strftime("%a, %d %b %Y %H:%M",gmtime(item["durationSeconds"]+item["startTimeSeconds"]+19800))
+		duration = get_duration( item["durationSeconds"]/60 )
+		if item["phase"].strip()=="BEFORE":
+			posts["upcoming"].append({ "Name" :  item["name"] , "url" : "http://codeforces.com/contest/"+str(item["id"]) , "StartTime" :  start_time,"EndTime" : end_time,"Duration":duration,"Platform":"CODEFORCES"  })
+			
 
 def fetch_topcoder():
     try:
@@ -109,8 +101,8 @@ def fetch_topcoder():
         data = json.load(page)["items"]
         cur_time = localtime()
         for item in data:
-            if(item["start"].has_key("date")):
-                continue
+		if(item["start"].has_key("date")):continue
+		        
                 start_time = strptime(item["start"]["dateTime"][:19], "%Y-%m-%dT%H:%M:%S")
                 start_time_indian = strftime("%a, %d %b %Y %H:%M",start_time)
                 end_time = strptime(item["end"]["dateTime"][:19], "%Y-%m-%dT%H:%M:%S")
@@ -118,10 +110,8 @@ def fetch_topcoder():
 
                 duration = get_duration(int(( mktime(end_time)-mktime(start_time) )/60 ))
                 name = item["summary"]
-                if "SRM" in name and "description" in item: 
-                    url = "http://community.topcoder.com/tc?module=MatchDetails&rd="+ item["description"][110:115]
-                else :            
-                    url = "http://tco15.topcoder.com/algorithm/rules/"
+                if "SRM" in name and "description" in item: url = "http://community.topcoder.com/tc?module=MatchDetails&rd="+ item["description"][110:115]
+                else :            url = "http://tco15.topcoder.com/algorithm/rules/"
                 
                 if cur_time<start_time:
                     posts["upcoming"].append({ "Name" :  name , "url" : url ,"EndTime" : end_time_indian,"Duration":duration, "StartTime" :  start_time_indian,"Platform":"TOPCODER"  })
@@ -136,16 +126,23 @@ def fetch_hackerrank_general():
     page = urlopen("https://www.hackerrank.com/rest/contests/upcoming?offset=0&limit=10&contest_slug=active&_="+cur_time)
     data = json.load(page)["models"]
     for item in data:
-        if not item["ended"] and ("https://www.hackerrank.com/"+item["slug"]) not in hackerrank_contests["urls"]:
-            start_time = strptime(item["get_starttimeiso"], "%Y-%m-%dT%H:%M:%SZ")
-            end_time = strptime(item["get_endtimeiso"], "%Y-%m-%dT%H:%M:%SZ")
-            duration = get_duration(int(( mktime(end_time)-mktime(start_time) )/60 ))
-            if not item["started"]:
-                hackerrank_contests["urls"].append("https://www.hackerrank.com/"+item["slug"])
-                posts["upcoming"].append({ "Name" :  item["name"] , "url" : "https://www.hackerrank.com/"+item["slug"] , "StartTime" :  strftime("%a, %d %b %Y %H:%M", localtime(mktime(start_time)+19800)),"EndTime" : strftime("%a, %d %b %Y %H:%M", localtime(mktime(end_time)+19800)),"Duration":duration,"Platform":"HACKERRANK"  })
-            elif   item["started"]:
-                hackerrank_contests["urls"].append("https://www.hackerrank.com/"+item["slug"])
-                posts["ongoing"].append({  "Name" :  item["name"] , "url" : "https://www.hackerrank.com/"+item["slug"]  , "EndTime"   : strftime("%a, %d %b %Y %H:%M", localtime(mktime(end_time)+19800))  ,"Platform":"HACKERRANK"  })
+		if item["ended"] and ("https://www.hackerrank.com/"+item["slug"]) not in hackerrank_contests["urls"]:
+			start_time = strptime(item["get_starttimeiso"], "%Y-%m-%dT%H:%M:%SZ")
+			end_time = strptime(item["get_endtimeiso"], "%Y-%m-%dT%H:%M:%SZ")
+			duration = get_duration(int(( mktime(end_time)-mktime(start_time) )/60 ))
+			if item["started"]:
+				hackerrank_contests["urls"].append("https://www.hackerrank.com/"+item["slug"])
+				posts["past"].append({  "Name" :  item["name"] , "url" : "https://www.hackerrank.com/"+item["slug"]  , "EndTime"   : strftime("%a, %d %b %Y %H:%M", localtime(mktime(end_time)+19800))  ,"Platform":"HACKERRANK"  })
+		if not item["ended"] and ("https://www.hackerrank.com/"+item["slug"]) not in hackerrank_contests["urls"]:
+			start_time = strptime(item["get_starttimeiso"], "%Y-%m-%dT%H:%M:%SZ")
+			end_time = strptime(item["get_endtimeiso"], "%Y-%m-%dT%H:%M:%SZ")
+			duration = get_duration(int(( mktime(end_time)-mktime(start_time) )/60 ))
+			if not item["started"]:
+				hackerrank_contests["urls"].append("https://www.hackerrank.com/"+item["slug"])
+				posts["upcoming"].append({ "Name" :  item["name"] , "url" : "https://www.hackerrank.com/"+item["slug"] , "StartTime" :  strftime("%a, %d %b %Y %H:%M", localtime(mktime(start_time)+19800)),"EndTime" : strftime("%a, %d %b %Y %H:%M", localtime(mktime(end_time)+19800)),"Duration":duration,"Platform":"HACKERRANK"  })
+			elif   item["started"]:
+				hackerrank_contests["urls"].append("https://www.hackerrank.com/"+item["slug"])
+				posts["ongoing"].append({  "Name" :  item["name"] , "url" : "https://www.hackerrank.com/"+item["slug"]  , "EndTime"   : strftime("%a, %d %b %Y %H:%M", localtime(mktime(end_time)+19800))  ,"Platform":"HACKERRANK"  })
 
 def fetch_hackerrank_college():
     cur_time = str(int(mktime(localtime())*1000))
@@ -164,26 +161,57 @@ def fetch_hackerrank_college():
                 posts["ongoing"].append({  "Name" :  item["name"] , "url" : "https://www.hackerrank.com/"+item["slug"]  , "EndTime"   : strftime("%a, %d %b %Y %H:%M", localtime(mktime(end_time)+19800))  ,"Platform":"HACKERRANK"  })
 
 def final():
-    fetch_codechef()
-    fetch_codeforces()
-    fetch_hackerearth()
-    fetch_topcoder()
-    fetch_hackerrank_college()
-    fetch_hackerrank_general()
-    for key,value in posts.iteritems():
-        if key=="ongoing":
-            print "ongoing wale :\n\n" 
-        else:
-            print "upcoming wale :\n\n"
-            for i in value:
-                print "type"
-                print type(i)
-                platform = i['Platform']
-                url = i['url']
-                start_time = i['StartTime']
-                end_time = i['EndTime']
-                duration = i['Duration']
-                name = i['Name']
-                upcoming_contest = UpcomingContest(platform=platform,
-                url=url, start_time=start_time, end_time=end_time,name = name,duration=duration)
-                upcoming_contest.save()
+	UpcomingContest.objects.all().delete()
+	PastContest.objects.all().delete()
+	OngoingContest.objects.all().delete()
+	fetch_codechef()
+	fetch_codeforces()
+	fetch_hackerearth()
+	fetch_topcoder()
+	#fetch_hackerrank_college()
+	#fetch_hackerrank_general()
+	posts["upcoming"] = sorted(posts["upcoming"], key=lambda k: strptime(k['StartTime'], "%a, %d %b %Y %H:%M"))
+	posts["ongoing"] = sorted(posts["ongoing"], key=lambda k: strptime(k['EndTime'], "%a, %d %b %Y %H:%M"))
+	posts["past"] = sorted(posts["past"], key=lambda k: strptime(k['EndTime'], "%a, %d %b %Y %H:%M"), reverse=True)
+	for key,value in posts.iteritems():
+		if key=="ongoing":
+			print "ongoing wale :\n\n"
+			for i in value:
+				print "type"
+				print type(i)
+				platform = i['Platform']
+				url = i['url']
+				#start_time = i['StartTime']
+				end_time = i['EndTime']
+				#duration = i['Duration']
+				name = i['Name']
+				ongoing_contest = OngoingContest(platform=platform,url=url, end_time=end_time,name = name)
+				ongoing_contest.save() 
+		elif key=="upcoming":
+			print "upcoming wale :\n\n"
+			for i in value:
+				print "type"
+				print type(i)
+				platform = i['Platform']
+				url = i['url']
+				start_time = i['StartTime']
+				end_time = i['EndTime']
+				duration = i['Duration']
+				name = i['Name']
+				upcoming_contest = UpcomingContest(platform=platform,url=url, start_time=start_time, end_time=end_time,name = name,duration=duration)
+				upcoming_contest.save()
+		else:
+			print "past wale :\n\n"
+			for i in value:
+				print "type"
+				print type(i)
+				platform = i['Platform']
+				url = i['url']
+				start_time = i['StartTime']
+				end_time = i['EndTime']
+				duration = i['Duration']
+				name = i['Name']
+				past_contest = PastContest(platform=platform,url=url, end_time=end_time,name = name,duration=duration,start_time=start_time)
+				past_contest.save()	
+
+final()

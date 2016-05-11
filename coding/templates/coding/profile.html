@@ -2,13 +2,14 @@
 <html>
 {% load staticfiles %}
 <head>
-<title>{{title}}</title>
+<title>Profile</title>
 <link href="{% static 'coding/css/bootstrap.min.css' %}" rel="stylesheet">
 
 <link href="{% static 'coding/css/signup.css' %}" rel="signupesheet">
 
 <link href="{% static 'coding/css/tuts.css' %}" rel="stylesheet">
 <link href="{% static 'coding/css/table.css' %}" rel="stylesheet">
+
 
 <link href="{% static 'coding/css/font-awesome.min.css' %}" rel="stylesheet">
 <link href="http://fonts.googleapis.com/css?family=Cookie" rel="stylesheet" type="text/css">  
@@ -22,9 +23,9 @@
 <script src="{% static 'coding/js/materialize.min.js' %}"></script>
 <script src="{% static 'coding/js/bootstrap.min.js' %}"></script>
 
-<script src="{% static 'coding/js/materialize.js' %}"></script>
-   
+<script src="{% static 'coding/js/materialize.js' %}"></script>  
 <script src="{% static 'coding/js/offcanvas.js' %}"></script>
+
 </head>
  
  
@@ -58,8 +59,9 @@
           </ul>
         </li>
       </ul>
+      
       {% endif %}
-	  </div><!-- /.nav-collapse -->
+        </div><!-- /.nav-collapse -->
       </div><!-- /.container -->
     </nav><!-- /.navbar -->
   </div>
@@ -70,52 +72,64 @@
   <div class="row"></div>
     <div class="col-lg-1"><br/><br/><br/><br/>
   </div>
-  <div class="col-lg-10",style="box-shadow:10px 0px 50px -2px rgba(0,0,0,1);" >
-  
-      <br>
-      <div class="row">
-        <h1><center>{{title}}</center></h1>
-      <table class="rwd-table">
-        <tr>
-          <th><center>Platform</th></center></th>
-          <th><center>Name</th></center></th>
-          {% if title != "Present Contests" %}
-          <th><center>Start Time</th></center></th>
-          {% endif %}
-          <th><center>End Time</th></center></th>
-          {% if title != "Present Contests" %}
-          <th><center>Duration</th></center></th>
-          {% endif %}
-        </tr>
-        {% for s in upcoming_contests %}
-                  <tr>
-                      {% if s.platform == "CODECHEF" %}
-                        <td data-th="Platform"><a href = "{{s.url}}"><img src="{% static "coding/cc.jpg" %}" class="img-circle" alt="" border=3 height=48 width=48></a></td>
-                      {% elif s.platform == "HACKEREARTH"%}
-                        <td data-th="Platform"><a href = "{{s.url}}"><img src="{% static "coding/he.png" %}" class="img-circle" alt="" border=3 height=48 width=48></a></td>
-                      {% elif s.platform == "CODEFORCES"%}
-                        <td data-th="Platform"><a href = "{{s.url}}"><img src="{% static "coding/cf.png" %}" class="img-circle" alt="" border=3 height=48 width=48></a></td>
-                        {% elif s.platform == "TOPCODER"%}
-                        <td data-th="Platform"><a href = "{{s.url}}"><img src="{% static "coding/tc.jpg" %}" class="img-circle" alt="" border=3 height=48 width=48></a></td>
-                      {% elif s.platform == "HACKERRANK"%}
-                        <td data-th="Platform"><a href = "{{s.url}}"><img src="{% static "coding/hr.jpg" %}" class="img-circle" alt="" border=3 height=48 width=48></a></td>
-                        {% endif %}
-						
-                    <td><center>{{s.name}}</center></td>
-                    {% if title != "Present Contests" %}
-                    <td><center>{{s.start_time}}</center></td>
-                    {% endif %}
-                    <td><center>{{s.end_time}}</center></td>
-                    {% if title != "Present Contests" %}
-                    <td><center>{{s.duration}}</center></td>
-                    {% endif %}
-                </tr>
-        {% endfor %}
-      </table>
-      </div>
-      <br>
- <!-- <img class ="mainimage" src ="img/tut1.jpg"><br/><br/><br/>-->
+  <div class="col-lg-10" style="box-shadow:10px 0px 50px -2px rgba(0,0,0,1);">
+  <br/>
+  <div class="row"></div>
+  <br>
+  <div class="container">
+  <div class="row">
+    <div class="col-md-6">
+    
+      <div class="panel panel-default">
+      <div class="panel-body">
+                  <div class="row">
+                        <div class="col-xs-12 col-sm-8">
+                            <h2>Mike Anamendolla</h2>
+                            <p><strong>About: </strong> Web Designer / UI. </p>
+                            <p><strong>Hobbies: </strong> Read, out with friends, listen to music, draw and learn new things. </p>
+                            <p><strong>Skills: </strong>
+                                <span class="label label-info tags">html5</span> 
+                                <span class="label label-info tags">css3</span>
+                                <span class="label label-info tags">jquery</span>
+                                <span class="label label-info tags">bootstrap3</span>
+                            </p>
+                        </div><!--/col-->          
+                        <div class="col-xs-12 col-sm-4 text-center">
+                                <img src="http://api.randomuser.me/portraits/men/49.jpg" alt="" class="center-block img-circle img-responsive">
+                                <ul class="list-inline ratings text-center" title="Ratings">
+                                  <li><a href="#"><span class="fa fa-star fa-lg"></span></a></li>
+                                  <li><a href="#"><span class="fa fa-star fa-lg"></span></a></li>
+                                  <li><a href="#"><span class="fa fa-star fa-lg"></span></a></li>
+                                  <li><a href="#"><span class="fa fa-star fa-lg"></span></a></li>
+                                  <li><a href="#"><span class="fa fa-star fa-lg"></span></a></li>
+                                </ul>
+                        </div><!--/col-->
+
+                        <div class="col-xs-12 col-sm-4">
+                            <h2><strong> 20,7K </strong></h2>                    
+                            <p><small>Followers</small></p>
+                            <button class="btn btn-success btn-block"><span class="fa fa-plus-circle"></span> Follow </button>
+                        </div><!--/col-->
+                        <div class="col-xs-12 col-sm-4">
+                            <h2><strong>245</strong></h2>                    
+                            <p><small>Following</small></p>
+                            <button class="btn btn-info btn-block"><span class="fa fa-user"></span> View Profile </button>
+                        </div><!--/col-->
+                        <div class="col-xs-12 col-sm-4">
+                            <h2><strong>43</strong></h2>                    
+                            <p><small>Snippets</small></p>
+                            <button type="button" class="btn btn-primary btn-block"><span class="fa fa-gear"></span> Options </button>  
+                        </div><!--/col-->
+                  </div><!--/row-->
+              </div><!--/panel-body-->
+          </div><!--/panel-->
+
+    
+    
+    </div>
   </div>
+</div>
+  </div> 
   <div class="col-lg-1">
     <br><br><br>    
   </div>

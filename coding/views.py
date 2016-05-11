@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 
 # Create your views here.
-from django.http import HttpResponse,HttpResponseRedirect
+from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.csrf import csrf_exempt,csrf_protect
@@ -12,9 +12,7 @@ import requests
 from bs4 import BeautifulSoup
 from time import strptime,strftime,mktime,gmtime,localtime
 from urllib2 import urlopen,Request
-from django.core.urlresolvers import reverse
 import urllib
-msg=""
 
 posts= {"ongoing":[] , "upcoming":[]}
 hackerrank_contests = {"urls":[]}
@@ -25,18 +23,9 @@ def index(request):
 		print request.user.is_authenticated()
 		message = request.GET.get('msg')
 		if message is not None:
-			return render(request, 'coding/index11.html',{'topFiveUsers' : topFiveUsers,"msg":message})
+			return render(request, 'coding/index11.html',{'topFiveUsers' : topFiveUsers, "msg" :message})
 		else:
 			return render(request, 'coding/index11.html',{'topFiveUsers' : topFiveUsers})
-
-		# if msg=="Successfully Signed Up":
-		# 	print "finally"
-		# 	setString("")
-		# 	return render(request, 'coding/index11.html',{'topFiveUsers' : topFiveUsers,"msg":"Successfully Signed Up"})
-		# else:
-		# 	print getString()
-		# 	print "Gmara"
-		# 	return render(request, 'coding/index11.html',{'topFiveUsers' : topFiveUsers})
 	elif(request.method=="POST"):
 		print request
 		username = request.POST.get('username')
@@ -70,16 +59,16 @@ def signup(request):
 			print 'yes'
 			s = spojSpider(sp)
 			c = codechefSpider(cc)
+			d = crawl(cf)
 			usr = User.objects.create_user(email=email, username=user_name, password=password, first_name=first_name, last_name=last_name)
 			
-			myusr = myUser(user=usr, codechef_handle=cc, spoj_handle=sp, codeforces_handle=cf,spoj_count=s,codechef_count=c,problem_count=s+c)
+			myusr = myUser(user=usr, codechef_handle=cc, spoj_handle=sp, codeforces_handle=cf,spoj_count=s,codechef_count=c,codeforces_count=d,problem_count=s+c+d)
 			myusr.save()
+			f={'msg' : 'Successfully Signed Up'}
+			q=urllib.urlencode(f)
 			#topFiveUsers = getTopFiveUsers()
-			setString("Successfully Signed Up")
-			f = { 'msg' : 'Successfully Signed Up'}
-			q = urllib.urlencode(f)
 			return redirect('/?'+q)
-			#return redirect('/',{'msg':"Successfully Signed Up",'topFiveUsers' : topFiveUsers})			
+			#return render(request,'coding/index11.html',{'msg':"Successfully Signed Up",'topFiveUsers' : topFiveUsers})			
 		else:
 			print user
 			print 'no'	
@@ -92,7 +81,17 @@ def compare(request):
 def upcomingContests(request):
 	if(request.method=="GET"):
 		upcoming_contests = UpcomingContest.objects.all()
-		return render(request,'coding/future.html',{'upcoming_contests' : upcoming_contests})
+		return render(request,'coding/future.html',{'upcoming_contests' : upcoming_contests,'title' : "Upcoming Contests"})
+
+def presentContests(request):
+	if(request.method=="GET"):
+		upcoming_contests = OngoingContest.objects.all()
+		return render(request,'coding/future.html',{'upcoming_contests' : upcoming_contests,'title' : "Present Contests"})
+
+def pastContests(request):
+	if(request.method=="GET"):
+		upcoming_contests = PastContest.objects.all()
+		return render(request,'coding/future.html',{'upcoming_contests' : upcoming_contests,'title' : "Past Contests"})		
 
 def about(request):
     if(request.method=="GET"):
@@ -101,6 +100,11 @@ def about(request):
 def contactUs(request):
     if(request.method=="GET"):
         return render(request,'coding/contact.html') 
+
+def users(request, username):
+    if(request.method=="GET"):
+    	print username 
+    	return render(request,'coding/profile.html')         
 
 def tutorial(request):
     if(request.method=="GET"):
@@ -316,6 +320,31 @@ def spojSpider(username):
 		data['sp'] = score
         return int(score)    
 
+def find_pages(username):
+    maxpages=1
+    url='http://codeforces.com/submissions/'+username
+    source_code=requests.get(url)
+    plain_text=source_code.text
+    soup=BeautifulSoup(plain_text)
+    for link in soup.findAll('span',{'class' : 'page-index'}):
+            maxpages=max(maxpages,int(link.string))
+    return maxpages
+
+def crawl(username):
+	page=1
+	x=[]
+	ct1=0
+	max_page=find_pages(username)
+	while page<= max_page:
+		url='http://codeforces.com/submissions/'+username+'/page/'+ str(page)
+		source_code=requests.get(url)
+		plain_text=source_code.text
+		soup=BeautifulSoup(plain_text)
+		for link in soup.findAll('span',{'submissionverdict' : 'OK'}):
+			ct1+=1
+		page=page+1
+	return ct1
+	
 def getTopFiveUsers():
 	topFiveUsers = []
 	numOfUsers = myUser.objects.all().count()
@@ -324,11 +353,6 @@ def getTopFiveUsers():
 	else:
 		topFiveUsers = myUser.objects.all().order_by('-problem_count')
 	return topFiveUsers	
-
-def setString(s):
-	msg = s
-def getString():
-	return msg		
 
 
 

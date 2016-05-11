@@ -44,16 +44,28 @@
             <li><a href="contact.html"><h6>Contact</h6></a></li>
           </ul>
       
-      <form class="navbar-form navbar-right">
+      {% if request.user.is_authenticated %}
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><h6>Welcome {{user.first_name}}</h6><span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="log_out"></h6>Log Out</h6></a></a></li>
+          </ul>
+        </li>
+      </ul>
+      {% else %}
+      <form class="navbar-form navbar-right" action="" method="post">
+            {% csrf_token %} 
             <div class="form-group">
-              <input type="text" placeholder="Email" class="form-control">
+              <input type="text" placeholder="Username" class="form-control" name = "username">
             </div>
             <div class="form-group">
-              <input type="password" placeholder="Password" class="form-control">
+              <input type="password" placeholder="Password" class="form-control" name = "password">
         </div>
             <button type="submit" class="btn btn-success">Sign in</button>
           </form>
-        </div><!-- /.nav-collapse -->
+      {% endif %}
+	  </div><!-- /.nav-collapse -->
       </div><!-- /.container -->
     </nav><!-- /.navbar -->
   </div>
@@ -70,47 +82,32 @@
         <h1><center>Past Contests</center></h1>
       <table class="rwd-table">
         <tr>
-          <th>Platform</th>
-          <th>Movie Title</th>
-          <th>Genre</th>
-          <th>Year</th>
-          <th>Gross</th>
+          <th><center>Platform</th></center></th>
+          <th><center>Name</th></center></th>
+          <th><center>Start Time</th></center></th>
+          <th><center>End Time</th></center></th>
+          <th><center>Duration</th></center></th>
         </tr>
-        <tr>
-          <td data-th="Platform"><img src="img/cf.png" class="img-circle" alt="" border=3 height=48 width=48></td>
-          <td data-th="Movie Title">American Graffiti</td>
-          <td data-th="Genre">Comedy, Drama</td>
-          <td data-th="Year">1973</td>
-          <td data-th="Gross">$115,000,000</td>
-        </tr>
-        <tr>
-          <td data-th="Platform"><img src="img/cf.png" class="img-circle" alt="" border=3 height=48 width=48></td>
-          <td data-th="Movie Title">Howard The Duck</td>
-          <td data-th="Genre">"Comedy"</td>
-          <td data-th="Year">1986</td>
-          <td data-th="Gross">$16,295,774</td>
-        </tr>
-        <tr>
-          <td data-th="Platform"><img src="img/cf.png" class="img-circle" alt="" border=3 height=48 width=48></td>
-          <td data-th="Movie Title">American Graffiti</td>
-          <td data-th="Genre">Comedy, Drama</td>
-          <td data-th="Year">1973</td>
-          <td data-th="Gross">$115,000,000</td>
-        </tr>
-        <tr>
-          <td data-th="Platform"><img src="img/cf.png" class="img-circle" alt="" border=3 height=48 width=48></td>
-          <td data-th="Movie Title">American Graffiti</td>
-          <td data-th="Genre">Comedy, Drama</td>
-          <td data-th="Year">1973</td>
-          <td data-th="Gross">$115,000,000</td>
-        </tr>
-        <tr>
-          <td data-th="Platform"><img src="img/cf.png" class="img-circle" alt="" border=3 height=48 width=48></td>
-          <td data-th="Movie Title">American Graffiti</td>
-          <td data-th="Genre">Comedy, Drama</td>
-          <td data-th="Year">1973</td>
-          <td data-th="Gross">$115,000,000</td>
-        </tr>
+        {% for s in upcoming_contests %}
+                  <tr>
+                      {% if s.platform == "CODECHEF" %}
+                        <td data-th="Platform"><a href = "{{s.url}}"><img src="{% static "coding/cc.jpg" %}" class="img-circle" alt="" border=3 height=48 width=48></a></td>
+                      {% elif s.platform == "HACKEREARTH"%}
+                        <td data-th="Platform"><a href = "{{s.url}}"><img src="{% static "coding/he.png" %}" class="img-circle" alt="" border=3 height=48 width=48></a></td>
+                      {% elif s.platform == "CODEFORCES"%}
+                        <td data-th="Platform"><a href = "{{s.url}}"><img src="{% static "coding/cf.png" %}" class="img-circle" alt="" border=3 height=48 width=48></a></td>
+                        {% elif s.platform == "TOPCODER"%}
+                        <td data-th="Platform"><a href = "{{s.url}}"><img src="{% static "coding/tc.jpg" %}" class="img-circle" alt="" border=3 height=48 width=48></a></td>
+                      {% elif s.platform == "HACKERRANK"%}
+                        <td data-th="Platform"><a href = "{{s.url}}"><img src="{% static "coding/hr.jpg" %}" class="img-circle" alt="" border=3 height=48 width=48></a></td>
+                        {% endif %}
+                    
+                    <td><center>{{s.name}}</center></td>
+                    <td><center>{{s.start_time}}</center></td>
+                    <td><center>{{s.end_time}}</center></td>
+                    <td><center>{{s.duration}}</center></td>
+                </tr>
+        {% endfor %}
       </table>
       </div>
       <br>
