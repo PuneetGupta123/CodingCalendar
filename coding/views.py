@@ -35,7 +35,7 @@ def index(request):
 			login(request, user)
 			print "user not none"
 			print user.is_authenticated()
-			return render(request,'coding/index11.html',{'msg':"Welcome "+user.first_name+" "+user.last_name,'topFiveUsers' : topFiveUsers})
+			return redirect('/users/'+user.username+'/')
 		else:
 			print "user none"
 			return render(request,'coding/index11.html',{'msg':"Invalid Credentials",'topFiveUsers' : topFiveUsers})
@@ -53,6 +53,8 @@ def signup(request):
 		cc = request.POST.get('CC')
 		cf = request.POST.get('CF')
 		sp = request.POST.get('SP')
+		skills = request.POST.getlist('checks[]')
+		#print check_list
 
 		user = User.objects.filter(username=user_name).count()
 		if user == 0:
@@ -64,6 +66,17 @@ def signup(request):
 			
 			myusr = myUser(user=usr, codechef_handle=cc, spoj_handle=sp, codeforces_handle=cf,spoj_count=s,codechef_count=c,codeforces_count=d,problem_count=s+c+d)
 			myusr.save()
+			for skill in skills:
+				count = Skill.objects.filter(title = skill).count()
+				if count == 0:
+					p1 = Skill(title = skill)
+					p1.save()
+					myusr.skills.add(p1)
+				else: 
+					result = Skill.objects.filter(title = skill)
+					p1 = result[0] 	
+					myusr.skills.add(p1)
+
 			f={'msg' : 'Successfully Signed Up'}
 			q=urllib.urlencode(f)
 			#topFiveUsers = getTopFiveUsers()
@@ -104,7 +117,10 @@ def contactUs(request):
 def users(request, username):
     if(request.method=="GET"):
     	print username 
-    	return render(request,'coding/profile.html')         
+    	user = User.objects.filter(username = username)
+    	fUser = user[0]
+    	print fUser
+    	return render(request,'coding/profile.html',{'fUser':fUser})         
 
 def tutorial(request):
     if(request.method=="GET"):

@@ -76,59 +76,55 @@
   <br/>
   <div class="row"></div>
   <br>
-  <div class="container">
-  <div class="row">
-    <div class="col-md-6">
+  
     
       <div class="panel panel-default">
       <div class="panel-body">
                   <div class="row">
                         <div class="col-xs-12 col-sm-8">
-                            <h2>Mike Anamendolla</h2>
-                            <p><strong>About: </strong> Web Designer / UI. </p>
-                            <p><strong>Hobbies: </strong> Read, out with friends, listen to music, draw and learn new things. </p>
+                            <h2>{{fUser.first_name}} {{fUser.last_name}}</h2>
+                            <p><strong>Email: </strong> {{fUser.email}} </p>
+                            <p><strong>Information: </strong> Codechef - {{fUser.myuser.codechef_handle}}, 
+                             Codeforces - {{fUser.myuser.codeforces_handle}}, Spoj - {{fUser.myuser.spoj_handle}}   
+                            </p>
                             <p><strong>Skills: </strong>
-                                <span class="label label-info tags">html5</span> 
+                                  {% for skill in fUser.myuser.skills.all %}
+                                          <span class="label label-info tags">{{skill.title}}</span> 
+                                {% endfor %}    
+
+                               <!--  <span class="label label-info tags">html5</span> 
                                 <span class="label label-info tags">css3</span>
                                 <span class="label label-info tags">jquery</span>
-                                <span class="label label-info tags">bootstrap3</span>
+                                <span class="label label-info tags">bootstrap3</span> -->
                             </p>
                         </div><!--/col-->          
                         <div class="col-xs-12 col-sm-4 text-center">
-                                <img src="http://api.randomuser.me/portraits/men/49.jpg" alt="" class="center-block img-circle img-responsive">
-                                <ul class="list-inline ratings text-center" title="Ratings">
-                                  <li><a href="#"><span class="fa fa-star fa-lg"></span></a></li>
-                                  <li><a href="#"><span class="fa fa-star fa-lg"></span></a></li>
-                                  <li><a href="#"><span class="fa fa-star fa-lg"></span></a></li>
-                                  <li><a href="#"><span class="fa fa-star fa-lg"></span></a></li>
-                                  <li><a href="#"><span class="fa fa-star fa-lg"></span></a></li>
-                                </ul>
+                        </div><!--/col-->
+                        </div>
+                        <div class="row">
+                        <div class="col-xs-12 col-sm-4">
+                            <h2><strong> {{fUser.myuser.codechef_count}}</strong></h2>                    
+                            <p><small>codechef questions solved</small></p>
+                            <a href = "https://www.codechef.com/users/{{fUser.myuser.codechef_handle}}"><button class="btn btn-success btn-block"><span class="fa fa-plus-circle"></span> Go To Profile </button></a>
+                        </div><!--/col-->
+                        <div class="col-xs-12 col-sm-4">
+                            <h2><strong>{{fUser.myuser.spoj_count}}</strong></h2>                    
+                            <p><small>spoj questions solved</small></p>
+                            <a href ="http://www.spoj.com/users/{{fUser.myuser.spoj_handle}}" ><button class="btn btn-info btn-block"><span class="fa fa-user"></span> Go To Profile </button></a>
+                        </div><!--/col-->
+                        <div class="col-xs-12 col-sm-4">
+                            <h2><strong>{{fUser.myuser.codeforces_count}}</strong></h2>                    
+                            <p><small>codeforces questions solved</small></p>
+                            <a href="http://codeforces.com/submissions/{{fUser.myuser.codeforces_handle}}"><button type="button" class="btn btn-primary btn-block"><span class="fa fa-gear"></span> Go To Profile </button> </a> 
                         </div><!--/col-->
 
-                        <div class="col-xs-12 col-sm-4">
-                            <h2><strong> 20,7K </strong></h2>                    
-                            <p><small>Followers</small></p>
-                            <button class="btn btn-success btn-block"><span class="fa fa-plus-circle"></span> Follow </button>
-                        </div><!--/col-->
-                        <div class="col-xs-12 col-sm-4">
-                            <h2><strong>245</strong></h2>                    
-                            <p><small>Following</small></p>
-                            <button class="btn btn-info btn-block"><span class="fa fa-user"></span> View Profile </button>
-                        </div><!--/col-->
-                        <div class="col-xs-12 col-sm-4">
-                            <h2><strong>43</strong></h2>                    
-                            <p><small>Snippets</small></p>
-                            <button type="button" class="btn btn-primary btn-block"><span class="fa fa-gear"></span> Options </button>  
-                        </div><!--/col-->
                   </div><!--/row-->
               </div><!--/panel-body-->
           </div><!--/panel-->
 
     
     
-    </div>
-  </div>
-</div>
+  
   </div> 
   <div class="col-lg-1">
     <br><br><br>    
